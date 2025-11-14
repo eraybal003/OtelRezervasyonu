@@ -11,7 +11,8 @@ public static class PersistenceServiceRegistration
 {
     public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<AppDBContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DBConn")));
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("DBConn")));
 
         services.AddScoped<IHotel, HotelRepo>();
         services.AddScoped<IRoom, RoomRepo>();

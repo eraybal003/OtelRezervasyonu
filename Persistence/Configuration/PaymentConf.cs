@@ -13,9 +13,8 @@ namespace Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<Payment> builder)
         {
-          builder.Property(p => p.Id)
-                .HasConversion(p => p.ToString(), p => Ulid.Parse(p))
-                .HasMaxLength(26);
+            builder.Property(p => p.Id)
+                .HasConversion(p => p.ToString(), p => Ulid.Parse(p));
             builder.Property(p => p.PaymentDate)
                 .HasColumnType("DateTime");
             builder.Property(p => p.PaymentMethod)

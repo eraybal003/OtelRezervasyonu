@@ -8,9 +8,8 @@ public class RoomConf : IEntityTypeConfiguration<Room>
 {
     public void Configure(EntityTypeBuilder<Room> builder)
     {
-       builder.Property(r => r.Id)
-            .HasConversion(r => r.ToString(), r => Ulid.Parse(r))
-            .HasMaxLength(26);
+        builder.Property(r => r.Id)
+            .HasConversion(r => r.ToString(), r => Ulid.Parse(r));
         builder.Property(r => r.RoomNumber)
             .HasColumnType("int")
             .HasMaxLength(700);

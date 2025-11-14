@@ -11,7 +11,7 @@ namespace Persistence.Repository
 {
     public class ReservationRepo : Repository<Reservation>, IReservation
     {
-        public ReservationRepo(AppDBContext context) : base(context)
+        public ReservationRepo(AppDbContext context) : base(context)
         {
         }
     }

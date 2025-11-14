@@ -13,9 +13,13 @@ namespace Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-           /* builder.Property(u => u.Id)
+           builder.Property(u => u.Id)
                 .HasMaxLength(26);
-            builder.HasMany(u => u.Reservations).WithOne(u => u.Guest);*/
+            builder.Property( u => u.FirstName)
+                .HasMaxLength(50);
+            builder.Property( u => u.LastName)
+                .HasMaxLength(50);
         }
+
     }
 }

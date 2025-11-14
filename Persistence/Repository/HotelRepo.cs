@@ -6,7 +6,7 @@ namespace Persistence.Repository;
 
 public class HotelRepo : Repository<Hotel>, IHotel
 {
-    public HotelRepo(AppDBContext context) : base(context)
+    public HotelRepo(AppDbContext context) : base(context)
     {
     }
 }

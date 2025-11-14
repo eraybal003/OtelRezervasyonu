@@ -6,7 +6,7 @@ namespace Persistence.Repository;
 
 public class PaymentRepo : Repository<Payment>, IPayment
 {
-    public PaymentRepo(AppDBContext context) : base(context)
+    public PaymentRepo(AppDbContext context) : base(context)
     {
     }
 }

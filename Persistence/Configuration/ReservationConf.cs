@@ -13,9 +13,8 @@ namespace Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<Reservation> builder)
         {
-            builder.Property(rn => rn.Id)
-                .HasConversion(rn => rn.ToString(), rn => Ulid.Parse(rn))
-                .HasMaxLength(26);
+            builder.Property(r => r.Id)
+                .HasConversion(r => r.ToString(), r => Ulid.Parse(r));
             builder.Property(rn => rn.StartDate)
                 .HasColumnType("DateTime");
             builder.Property(rn => rn.EndDate)

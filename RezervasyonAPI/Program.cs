@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Context;
+using RezervasyonAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 var connString = builder.Configuration.GetConnectionString("DBConn");
@@ -13,23 +14,7 @@ Console.WriteLine($"🔗 Program.cs - Connection String: {connString}");
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddAppServices();
 builder.Services.AddControllers();
-builder.Services.AddIdentityCore<User>()
-    .AddRoles<Role>()
-    .AddEntityFrameworkStores<DbContext>()
-    .AddDefaultTokenProviders();
-var serviceProvider = builder.Services.BuildServiceProvider();
-try
-{
-    var context = serviceProvider.GetRequiredService<AppDBContext>();
-    Console.WriteLine("✅ DbContext registered successfully in DI");
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"❌ DbContext registration failed: {ex.Message}");
-}
-builder.Services.AddOpenApi();
-
-builder.Services.Configure<IdentityOptions>(opt =>
+builder.Services.AddIdentity<User, Role>(opt =>
 {
     opt.Password.RequiredUniqueChars = 1;
     opt.Password.RequireDigit = true;
@@ -38,9 +23,13 @@ builder.Services.Configure<IdentityOptions>(opt =>
     opt.Password.RequireUppercase = true;
     opt.Password.RequireNonAlphanumeric = true;
     opt.User.RequireUniqueEmail = true;
-    opt.SignIn.RequireConfirmedEmail = true;    
+    opt.SignIn.RequireConfirmedEmail = true;
+})
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
-});
+//builder.Services.AddDataProtection();
+
 
 var app = builder.Build();
 
@@ -55,46 +44,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-using(var servicescope = app.Services.CreateScope())
-{
-    var services = servicescope.ServiceProvider;
-    var dbcontext = services.GetRequiredService<DbContext>();
-    dbcontext.Database.EnsureCreated();
 
-    var rolmanager = services.GetRequiredService<RoleManager<Role>>();
-    if (!await rolmanager.RoleExistsAsync(Role.Administrator))
-    {
-        await rolmanager.CreateAsync(new Role()
-        {
-            Id = Ulid.NewUlid().ToString(),
-            Name = Role.Administrator,
-            CreatedTime = DateTime.Now
-
-        });
-    }
-    if (!await rolmanager.RoleExistsAsync(Role.Owner))
-    {
-        await rolmanager.CreateAsync(new Role()
-        {
-            Id = Ulid.NewUlid().ToString(),
-            Name = Role.Owner,
-            CreatedTime = DateTime.Now
-
-        });
-    }
-    if (!await rolmanager.RoleExistsAsync(Role.Customer))
-    {
-        await rolmanager.CreateAsync(new Role()
-        {
-            Id = Ulid.NewUlid().ToString(),
-            Name = Role.Customer,
-            CreatedTime = DateTime.Now
-
-        });
-    }
-
-}
 
 app.MapControllers();
 
+await Seeder.SeedData(app);
 app.Run();

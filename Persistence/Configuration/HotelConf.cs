@@ -8,9 +8,8 @@ public class HotelConf : IEntityTypeConfiguration<Hotel>
 {
     public void Configure(EntityTypeBuilder<Hotel> builder)
     {
-       builder.Property(h => h.Id)
-           .HasMaxLength(26)
-           .HasConversion(h => h.ToString(), h => Ulid.Parse(h));
+        builder.Property(h => h.Id)
+            .HasConversion(h => h.ToString(), h => Ulid.Parse(h));
         builder.Property(h => h.Name)
             .HasMaxLength(100);
         builder.Property(h => h.Address)

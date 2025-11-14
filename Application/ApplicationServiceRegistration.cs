@@ -7,11 +7,11 @@ public static class ApplicationServiceRegistration
 {
     public static IServiceCollection AddAppServices(this IServiceCollection descriptors)
     {
-        descriptors.AddScoped<HotelService, HotelService>();
-        descriptors.AddScoped<RoomService, RoomService>();
-        descriptors.AddScoped<RoomTypeService, RoomTypeService>();
-        descriptors.AddScoped<ReservationService, ReservationService>();
-        descriptors.AddScoped<PaymentServ, PaymentServ>();
+        descriptors.AddScoped<HotelService>();
+        descriptors.AddScoped<RoomService>();
+        descriptors.AddScoped<RoomTypeService>();
+        descriptors.AddScoped<ReservationService>();
+        descriptors.AddScoped<PaymentServ>();
 
         return descriptors;
     }

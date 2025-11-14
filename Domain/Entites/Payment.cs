@@ -8,5 +8,5 @@ public class Payment: CommonClass.CommonBase
     public string PaymentMethod { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
 
-    public Reservation Reservation { get; set; } = null!;
+    public Reservation Reservation { get; set; } 
 }

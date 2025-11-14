@@ -5,12 +5,12 @@ using System.Linq.Expressions;
 
 namespace Persistence.Repository;
 
-public class Repository<TEntity>(AppDBContext context) : IRepository<TEntity> where TEntity : CommonBase
+public class Repository<TEntity>(AppDbContext context) : IRepository<TEntity> where TEntity : CommonBase
 {
-    private readonly AppDBContext _context1 = context;
+    private readonly AppDbContext _context1 = context;
     public void Add(TEntity entity)
     {
-        entity.Id = Ulid.NewUlid();
+        //entity.Id = Ulid.NewUlid();
         entity.CreatedDate = DateTime.Now;
         _context1.Set<TEntity>().Add(entity);
         _context1.SaveChanges();

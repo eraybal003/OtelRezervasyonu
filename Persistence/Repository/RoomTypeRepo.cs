@@ -6,7 +6,7 @@ namespace Persistence.Repository
 {
     public class RoomTypeRepo : Repository<RoomType>, IRoomType
     {
-        public RoomTypeRepo(AppDBContext context) : base(context)
+        public RoomTypeRepo(AppDbContext context) : base(context)
         {
         }
     }

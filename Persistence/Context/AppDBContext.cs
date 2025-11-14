@@ -2,23 +2,26 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-
 namespace Persistence.Context;
 
-public class AppDBContext(DbContextOptions options) : IdentityDbContext<User>(options)
+public class AppDbContext : IdentityDbContext<User>
 {
-    public DbSet<RoomType> RoomType { get; set; }
-    public DbSet<Room> Room { get; set; }
-    public DbSet<Payment> Payment { get; set; }
-    public DbSet<Reservation> Booking { get; set; }
-    public DbSet<Hotel> Hotel  { get; set; }
+    public AppDbContext(DbContextOptions options) : base(options)
+    {
+    }
+    protected AppDbContext()
+    {
 
+    }
+    public DbSet<Hotel> Hotels { get; set; }
+    public DbSet<Room> Rooms { get; set; }
+    public DbSet<RoomType> RoomTypes { get; set; }
+    public DbSet<Reservation> Reservations { get; set; }
+    public DbSet<Payment> Payments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-
-        builder.ApplyConfigurationsFromAssembly(typeof(AppDBContext).Assembly);
         base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
-
